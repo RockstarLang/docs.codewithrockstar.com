@@ -8,6 +8,7 @@ on:
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+  workflow_call:
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
@@ -38,9 +39,10 @@ jobs:
         with:
           name: docs.codewithrockstar.com_site
           path: docs.codewithrockstar.com
-          github-token: ${{ secrets.GH_PAT }} # token with actions:read permissions on target repo
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          # ${{ secrets.GH_PAT }} # token with actions:read permissions on target repo
           repository: RockstarLang/rockstar2
-          # run-id: 1234
+          run-id: ${{ github.event.workflow_run.id }}
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
